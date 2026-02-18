@@ -195,7 +195,6 @@ fun Greeting(
     }
 }
 
-
 fun LazyListScope.text(
     text: String,
     color: Color? = null,
@@ -213,15 +212,6 @@ fun LazyListScope.text(
         )
     }
 }
-
-//val dynamicContext = DynamicColors.wrapContextIfAvailable(MyApplication.instance)
-//
-//@ColorInt
-//fun Context.getThemeColor(@AttrRes attrRes: Int): Int {
-//    val typedValue = TypedValue()
-//    theme.resolveAttribute(attrRes, typedValue, true)
-//    return typedValue.data
-//}
 
 @Preview(showBackground = true)
 @Composable
