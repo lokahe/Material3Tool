@@ -2,6 +2,10 @@ name: Build & Release APK
 on:
   push:
     tags: ['v*'] # Triggers when you push a tag like v1.0
+
+permissions:
+  contents: write  # Allow creating releases
+
 jobs:
   build:
     runs-on: ubuntu-latest
