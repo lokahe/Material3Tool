@@ -1,13 +1,10 @@
 package com.lokahe.material3
 
-import android.content.Context
+import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.TypedValue
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.annotation.AttrRes
-import androidx.annotation.ColorInt
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.splineBasedDecay
 import androidx.compose.foundation.background
@@ -27,7 +24,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
@@ -39,20 +36,18 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.input.pointer.util.VelocityTracker
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
-import com.google.android.material.color.DynamicColors
 import com.lokahe.material3.ui.theme.Material3CheckerTheme
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
+    @SuppressLint("FrequentlyChangingValue")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            var splitRatio by remember { mutableStateOf(0.5f) }
-            // Create ONE state to rule them both
+            var splitRatio by remember { mutableFloatStateOf(0.5f) }
             val listState = rememberLazyListState()
             val listState2 = rememberLazyListState()
-            // Sync State 1 to State 2
             LaunchedEffect(
                 listState.firstVisibleItemIndex,
                 listState.firstVisibleItemScrollOffset
@@ -203,7 +198,7 @@ fun Greeting(
 
 fun LazyListScope.text(
     text: String,
-    color: Color? = null, // Color(dynamicContext.getThemeColor(android.R.attr.cackground)),
+    color: Color? = null,
     style: TextStyle = TextStyle.Default
 ) {
     item {
@@ -219,14 +214,14 @@ fun LazyListScope.text(
     }
 }
 
-val dynamicContext = DynamicColors.wrapContextIfAvailable(MyApplication.instance)
-
-@ColorInt
-fun Context.getThemeColor(@AttrRes attrRes: Int): Int {
-    val typedValue = TypedValue()
-    theme.resolveAttribute(attrRes, typedValue, true)
-    return typedValue.data
-}
+//val dynamicContext = DynamicColors.wrapContextIfAvailable(MyApplication.instance)
+//
+//@ColorInt
+//fun Context.getThemeColor(@AttrRes attrRes: Int): Int {
+//    val typedValue = TypedValue()
+//    theme.resolveAttribute(attrRes, typedValue, true)
+//    return typedValue.data
+//}
 
 @Preview(showBackground = true)
 @Composable
