@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Material3Tool</string>
+    <string name="color_pic">color picker</string>
+    <string name="color_picker">color picker</string>
 </resources>

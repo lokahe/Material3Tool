@@ -18,6 +18,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -25,6 +27,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
@@ -34,9 +37,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.input.pointer.util.VelocityTracker
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
+import com.lokahe.material3.ui.ColorPickerDialog
 import com.lokahe.material3.ui.theme.Material3CheckerTheme
+import com.lokahe.material3.ui.theme.colorSeedState
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
@@ -46,6 +53,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             var splitRatio by remember { mutableFloatStateOf(0.5f) }
+            var showColorPicker by remember { mutableStateOf(false) }
             val listState = rememberLazyListState()
             val listState2 = rememberLazyListState()
             LaunchedEffect(
@@ -111,8 +119,20 @@ class MainActivity : ComponentActivity() {
                         }
                 ) {
                     Scaffold(
-                        modifier = Modifier.fillMaxSize()
-                            .clip(SplitRectShape(splitRatio))
+                        modifier = Modifier.fillMaxSize().clip(SplitRectShape(splitRatio)),
+                        floatingActionButton = {
+                            FloatingActionButton(
+                                onClick = { showColorPicker = !showColorPicker },
+                                containerColor = MaterialTheme.colorScheme.primaryContainer.copy(
+                                    alpha = 0.5f
+                                )
+                            ) {
+                                Icon(
+                                    painter = painterResource(R.drawable.outline_cookie_24),
+                                    contentDescription = stringResource(R.string.color_picker)
+                                )
+                            }
+                        }
                     ) { innerPadding ->
                         Greeting(
                             modifier = Modifier.fillMaxSize(),
@@ -120,6 +140,12 @@ class MainActivity : ComponentActivity() {
                             listState, false
                         )
                     }
+                }
+                if (showColorPicker) {
+                    ColorPickerDialog(
+                        onDismiss = { showColorPicker = false },
+                        onReset = { colorSeedState.value = Color.Unspecified },
+                        onColorSelected = { colorSeedState.value = it })
                 }
             }
         }
@@ -179,15 +205,15 @@ fun Greeting(
         text("$colorSchemeStr.onTertiary", color = colorScheme.onTertiary)
         text("$colorSchemeStr.tertiaryContainer", color = colorScheme.tertiaryContainer)
         text("$colorSchemeStr.onTertiaryContainer", color = colorScheme.onTertiaryContainer)
-        text("$typographyStr.bodySmall", style = typography.bodySmall)
-        text("$typographyStr.bodyMedium", style = typography.bodyMedium)
-        text("$typographyStr.bodyLarge", style = typography.bodyLarge)
         text("$typographyStr.displaySmall", style = typography.displaySmall)
         text("$typographyStr.displayMedium", style = typography.displayMedium)
         text("$typographyStr.displayLarge", style = typography.displayLarge)
         text("$typographyStr.headlineSmall", style = typography.headlineSmall)
         text("$typographyStr.headlineMedium", style = typography.headlineMedium)
         text("$typographyStr.headlineLarge", style = typography.headlineLarge)
+        text("$typographyStr.bodySmall", style = typography.bodySmall)
+        text("$typographyStr.bodyMedium", style = typography.bodyMedium)
+        text("$typographyStr.bodyLarge", style = typography.bodyLarge)
         text("$typographyStr.labelSmall", style = typography.labelSmall)
         text("$typographyStr.labelMedium", style = typography.labelMedium)
         text("$typographyStr.labelLarge", style = typography.labelLarge)
