@@ -152,6 +152,8 @@ fun Greeting(
         text("$colorSchemeStr.inversePrimary", color = colorScheme.inversePrimary)
         text("$colorSchemeStr.inverseSurface", color = colorScheme.inverseSurface)
         text("$colorSchemeStr.inverseOnSurface", color = colorScheme.inverseOnSurface)
+        text("$colorSchemeStr.outline", color = colorScheme.outline)
+        text("$colorSchemeStr.outlineVariant", color = colorScheme.outlineVariant)
         text("$colorSchemeStr.primary", color = colorScheme.primary)
         text("$colorSchemeStr.onPrimary", color = colorScheme.onPrimary)
         text("$colorSchemeStr.primaryContainer", color = colorScheme.primaryContainer)
